@@ -1,0 +1,67 @@
+export const properties = [
+  {
+    id: 'oasis-heights',
+    title: 'The Oasis Heights',
+    location: 'New Cairo, Sector 7',
+    price: 'EGP 12.5M',
+    beds: 5,
+    baths: 4,
+    area: '450m²',
+    type: 'Luxury Villa',
+    image:
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
+    tags: ['Eco-Certified', 'Verified'],
+  },
+  {
+    id: 'limestone-sanctuary',
+    title: 'Limestone Sanctuary',
+    location: 'El Gouna, Phase 4',
+    price: 'EGP 8.2M',
+    beds: 3,
+    baths: 3,
+    area: '280m²',
+    type: 'Apartment',
+    image:
+      'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80',
+    tags: ['Eco-Certified'],
+  },
+  {
+    id: 'azure-coastal-villa',
+    title: 'Azure Coastal Villa',
+    location: 'North Coast, Sidi Abdel Rahman',
+    price: 'EGP 15.0M',
+    beds: 6,
+    baths: 5,
+    area: '520m²',
+    type: 'Luxury Villa',
+    image:
+      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1200&q=80',
+    tags: ['Verified'],
+  },
+  {
+    id: 'glass-pavilion',
+    title: 'The Glass Pavilion',
+    location: 'Sheikh Zayed City',
+    price: 'EGP 6.9M',
+    beds: 4,
+    baths: 3,
+    area: '310m²',
+    type: 'Duplex',
+    image:
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+    tags: ['Eco-Certified'],
+  },
+  {
+    id: 'nile-horizon-loft',
+    title: 'The Nile Horizon Loft',
+    location: 'New Cairo, The 5th Settlement',
+    price: 'EGP 24,500 / month',
+    beds: 2,
+    baths: 2,
+    area: '145m²',
+    type: 'Student Housing',
+    image:
+      'https://images.unsplash.com/photo-1604014237800-1c9102c219da?auto=format&fit=crop&w=1200&q=80',
+    tags: ['Sustainable Certified'],
+  },
+]

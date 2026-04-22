@@ -1,0 +1,6 @@
+export { default as HomePage } from './HomePage'
+export { default as PropertiesPage } from './PropertiesPage'
+export { default as PropertyDetailsPage } from './PropertyDetailsPage'
+export { default as StudentDashboardPage } from './StudentDashboardPage'
+export { default as LoginPage } from './LoginPage'
+export { default as RegisterPage } from './RegisterPage'
