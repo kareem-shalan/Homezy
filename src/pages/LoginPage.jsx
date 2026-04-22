@@ -38,7 +38,7 @@ const LoginPage = () => {
         <div className="mx-auto max-w-md">
           <Card className="p-6 sm:p-8">
             <div className="text-center">
-               <img className='animate-pulse text-3xl font-bold text-primary-800' src="/public/Logo.png" alt=" Homezy Logo" /> 
+               <img className='animate-pulse text-3xl font-bold text-primary-800' src="../public/Logo.png" alt=" Homezy Logo" /> 
               <p className="text-sm text-neutral-600">Curating Modern Egyptian Living</p>
             </div>
 
