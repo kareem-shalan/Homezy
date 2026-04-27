@@ -1,9 +1,14 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, Card, Input, Modal, Navbar } from '../components'
+import PageTransition from '../components/homezy/animations/PageTransition'
+import ScaleHover from '../components/homezy/animations/ScaleHover'
+import SlideUp from '../components/homezy/animations/SlideUp'
 import { useRegisterForm } from '../hooks/useAuthForm'
 import { registerUser } from '../services/authService'
 import { cn } from '../utils/cn'
+
+const backgroundImage = '/download.png'
 
 const roles = ['student', 'family', 'foreigner', 'broker']
 
@@ -42,12 +47,26 @@ const RegisterPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-100">
+    <div
+    style={{ backgroundImage: `url(${backgroundImage})` }}
+    className="min-h-screen bg-neutral-100 
+    bg-no-repeat
+    bg-cover
+    bg-blend-multiply
+    
+    
+    
+    bg-center">
       <Navbar showSwitchRole={false} />
 
-      <main className="px-4 py-8">
-        <div className="mx-auto max-w-2xl">
-          <Card className="p-6 sm:p-8">
+      <main className="px-4 py-8
+      
+      bg-black/40
+      ">
+        <PageTransition>
+          <div className="mx-auto max-w-2xl">
+            <SlideUp>
+              <Card className="p-6 sm:p-8">
             <h1 className="text-center text-4xl font-bold text-primary-800">Create your horizon</h1>
             <p className="mt-2 text-center text-neutral-600">Join Egypt&apos;s most curated real estate ecosystem.</p>
 
@@ -125,16 +144,23 @@ const RegisterPage = () => {
                 <div className="rounded-md border border-error/20 bg-error/10 px-3 py-2 text-sm text-error">{submitError}</div>
               ) : null}
 
-              <Button type="submit" className="w-full" isLoading={isLoading}>
-                Build My Account
-              </Button>
+              <ScaleHover glow>
+                <Button type="submit" className="w-full" isLoading={isLoading}>
+                  Build My Account
+                </Button>
+              </ScaleHover>
             </form>
 
             <div className="my-6 h-px bg-neutral-200" />
 
             <div className="grid grid-cols-2 gap-3">
-              <Button variant="outline">Google</Button>
-              <Button variant="outline">LinkedIn</Button>
+              {['Google', 'LinkedIn'].map((provider, index) => (
+                <SlideUp key={provider} delay={index * 0.05}>
+                  <ScaleHover>
+                    <Button variant="outline">{provider}</Button>
+                  </ScaleHover>
+                </SlideUp>
+              ))}
             </div>
 
             <p className="mt-6 text-center text-sm text-neutral-600">
@@ -143,8 +169,10 @@ const RegisterPage = () => {
                 Sign In
               </Link>
             </p>
-          </Card>
-        </div>
+              </Card>
+            </SlideUp>
+          </div>
+        </PageTransition>
       </main>
 
       <Modal

@@ -1,0 +1,58 @@
+export const universities = [
+  {
+    id: 'auc',
+    name: 'AUC',
+    city: 'New Cairo',
+    lat: 30.0185,
+    lng: 31.4997,
+  },
+  {
+    id: 'tanta-university',
+    name: 'Tanta University',
+    city: 'Tanta',
+    lat: 30.7885,
+    lng: 31.0004,
+  },
+  {
+    id: 'cairo-university',
+    name: 'Cairo University',
+    city: 'Giza',
+    lat: 30.0276,
+    lng: 31.2101,
+  },
+  {
+    id: 'alexandria-university',
+    name: 'Alexandria University',
+    city: 'Alexandria',
+    lat: 31.2001,
+    lng: 29.9187,
+  },
+  {
+    id: 'ain-shams-university',
+    name: 'Ain Shams University',
+    city: 'Cairo',
+    lat: 30.0778,
+    lng: 31.2859,
+  },
+  {
+    id: 'mansoura-university',
+    name: 'Mansoura University',
+    city: 'Mansoura',
+    lat: 31.0409,
+    lng: 31.3785,
+  },
+  {
+    id: 'guc',
+    name: 'German University in Cairo',
+    city: 'New Cairo',
+    lat: 29.9869,
+    lng: 31.4417,
+  },
+  {
+    id: 'bue',
+    name: 'British University in Egypt',
+    city: 'El Shorouk',
+    lat: 30.1187,
+    lng: 31.6041,
+  },
+]

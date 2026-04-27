@@ -2,6 +2,10 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Badge, Button, Card, Container, Footer, Navbar, PropertyCard } from '../components'
 import AudienceSection from '../components/homezy/AudienceSection'
+import PageTransition from '../components/homezy/animations/PageTransition'
+import ScaleHover from '../components/homezy/animations/ScaleHover'
+import SlideUp from '../components/homezy/animations/SlideUp'
+import SafeAudienceSection from '../components/homezy/SafeAudienceSection'
 import { properties } from '../data/properties'
 
 const audienceTypeMap = {
@@ -32,41 +36,62 @@ const HomePage = () => {
     <div className="min-h-screen bg-neutral-50">
       <Navbar />
 
-      <main>
+      <PageTransition>
+        <main>
         <section className="pb-12 pt-8">
           <Container className="grid items-center gap-6 lg:grid-cols-2">
-            <Card className="p-6 lg:p-8">
-              <Badge variant="primary">Premium Collection</Badge>
-              <h1 className="mt-4 text-4xl font-bold leading-tight text-primary-800 sm:text-5xl">
-                Curating Modern Egyptian Living
-              </h1>
-              <p className="mt-4 max-w-lg text-neutral-600">
-                Discover premium homes with verified quality standards, sustainability labels, and tailored options for
-                families and students.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link to="/properties">
-                  <Button>Search Properties</Button>
-                </Link>
-                <Link to="/student">
-                  <Button variant="outline">Student Hub</Button>
-                </Link>
-              </div>
-            </Card>
+            <SlideUp>
+              <Card className="p-6 lg:p-8">
+                <Badge variant="primary">Premium Collection</Badge>
+                <h1 className="mt-4 text-4xl font-bold leading-tight text-primary-800 sm:text-5xl">
+                  Curating Modern Egyptian Living
+                </h1>
+                <p className="mt-4 max-w-lg text-neutral-600">
+                  Discover premium homes with verified quality standards, sustainability labels, and tailored options for
+                  families and students.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <ScaleHover glow>
+                    <Link to="/properties">
+                      <Button>Search Properties</Button>
+                    </Link>
+                  </ScaleHover>
+                  <ScaleHover>
+                    <Link to="/student">
+                      <Button variant="outline">Student Hub</Button>
+                    </Link>
+                  </ScaleHover>
+                </div>
+              </Card>
+            </SlideUp>
 
-            <Card className="overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1400&q=80"
-                alt="Luxury property"
-                className="h-[380px] w-full object-cover"
-              />
-            </Card>
+            <SlideUp delay={0.12}>
+              <ScaleHover>
+                <Card className="overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1400&q=80"
+                    alt="Luxury property"
+                    className="h-[380px] w-full object-cover"
+                  />
+                </Card>
+              </ScaleHover>
+            </SlideUp>
           </Container>
         </section>
 
         <section className="py-10">
           <Container>
-            <AudienceSection selectedAudience={selectedAudience} onAudienceChange={setSelectedAudience} />
+            <SlideUp>
+              <AudienceSection selectedAudience={selectedAudience} onAudienceChange={setSelectedAudience} />
+            </SlideUp>
+          </Container>
+        </section>
+
+        <section className="py-10">
+          <Container>
+            <SlideUp>
+              <SafeAudienceSection />
+            </SlideUp>
           </Container>
         </section>
 
@@ -79,10 +104,14 @@ const HomePage = () => {
               </Link>
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {featured.map((property) => (
-                <Link key={property.id} to={`/properties/${property.id}`}>
-                  <PropertyCard property={property} />
-                </Link>
+              {featured.map((property, index) => (
+                <SlideUp key={property.id} delay={index * 0.08}>
+                  <ScaleHover>
+                    <Link to={`/properties/${property.id}`}>
+                      <PropertyCard property={property} />
+                    </Link>
+                  </ScaleHover>
+                </SlideUp>
               ))}
             </div>
             {!featured.length ? <p className="mt-3 text-sm text-neutral-600">No properties found for this audience yet.</p> : null}
@@ -91,21 +120,29 @@ const HomePage = () => {
 
         <section className="py-10">
           <Container className="grid gap-6 lg:grid-cols-2">
-            <Card className="overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?auto=format&fit=crop&w=1200&q=80"
-                alt="Advisor"
-                className="h-full w-full object-cover"
-              />
-            </Card>
-            <Card className="p-6">
-              <Badge variant="primary">Advisory</Badge>
-              <h2 className="mt-4 text-3xl font-bold text-primary-800">VIP Advisory & Personalized Search</h2>
-              <p className="mt-4 text-neutral-600">
-                Work with our property advisors for curated options, legal guidance, and a faster closing experience.
-              </p>
-              <Button className="mt-6">Book Consultation</Button>
-            </Card>
+            <SlideUp>
+              <ScaleHover>
+                <Card className="overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?auto=format&fit=crop&w=1200&q=80"
+                    alt="Advisor"
+                    className="h-full w-full object-cover"
+                  />
+                </Card>
+              </ScaleHover>
+            </SlideUp>
+            <SlideUp delay={0.1}>
+              <Card className="p-6">
+                <Badge variant="primary">Advisory</Badge>
+                <h2 className="mt-4 text-3xl font-bold text-primary-800">VIP Advisory & Personalized Search</h2>
+                <p className="mt-4 text-neutral-600">
+                  Work with our property advisors for curated options, legal guidance, and a faster closing experience.
+                </p>
+                <ScaleHover glow className="mt-6 inline-block">
+                  <Button>Book Consultation</Button>
+                </ScaleHover>
+              </Card>
+            </SlideUp>
           </Container>
         </section>
 
@@ -113,10 +150,14 @@ const HomePage = () => {
           <Container>
             <h2 className="mb-4 text-2xl font-bold text-primary-800">Verified Near Universities</h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {nearUniversity.map((property) => (
-                <Link key={property.id} to={`/properties/${property.id}`}>
-                  <PropertyCard property={property} compact />
-                </Link>
+              {nearUniversity.map((property, index) => (
+                <SlideUp key={property.id} delay={index * 0.05}>
+                  <ScaleHover>
+                    <Link to={`/properties/${property.id}`}>
+                      <PropertyCard property={property} compact />
+                    </Link>
+                  </ScaleHover>
+                </SlideUp>
               ))}
             </div>
             {!nearUniversity.length ? (
@@ -124,7 +165,8 @@ const HomePage = () => {
             ) : null}
           </Container>
         </section>
-      </main>
+        </main>
+      </PageTransition>
 
       <Footer />
     </div>
