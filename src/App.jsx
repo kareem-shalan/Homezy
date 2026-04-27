@@ -7,6 +7,7 @@ import {
   PropertyDetailsPage,
   RegisterPage,
   StudentDashboardPage,
+  UserProfilePage,
 } from './pages'
 
 const ProtectedRoute = ({ children }) => {
@@ -56,6 +57,14 @@ const App = () => {
         element={
           <ProtectedRoute>
             <StudentDashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <UserProfilePage />
           </ProtectedRoute>
         }
       />

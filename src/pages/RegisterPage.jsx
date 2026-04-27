@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, Card, Input, Modal, Navbar } from '../components'
+import { useAuth } from '../context'
 import PageTransition from '../components/homezy/animations/PageTransition'
 import ScaleHover from '../components/homezy/animations/ScaleHover'
 import SlideUp from '../components/homezy/animations/SlideUp'
@@ -23,11 +24,24 @@ const getStrength = (password) => {
 
 const RegisterPage = () => {
   const navigate = useNavigate()
+  const { login } = useAuth()
   const { values, errors, onChange, setRole, validate, reset } = useRegisterForm()
+  const [avatarPreview, setAvatarPreview] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [isSuccessOpen, setIsSuccessOpen] = useState(false)
   const passwordStrength = useMemo(() => getStrength(values.password), [values.password])
+
+  const onAvatarChange = (event) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = () => {
+      setAvatarPreview(String(reader.result || ''))
+    }
+    reader.readAsDataURL(file)
+  }
 
   const onSubmit = async (event) => {
     event.preventDefault()
@@ -36,9 +50,11 @@ const RegisterPage = () => {
 
     setIsLoading(true)
     try {
-      await registerUser(values)
-      setIsSuccessOpen(true)
+      const authData = await registerUser({ ...values, avatar: avatarPreview })
+      login(authData)
       reset()
+      setAvatarPreview('')
+      navigate('/profile')
     } catch (error) {
       setSubmitError(error.message)
     } finally {
@@ -69,6 +85,26 @@ const RegisterPage = () => {
               <Card className="p-6 sm:p-8">
             <h1 className="text-center text-4xl font-bold text-primary-800">Create your horizon</h1>
             <p className="mt-2 text-center text-neutral-600">Join Egypt&apos;s most curated real estate ecosystem.</p>
+
+            <div className="mt-6 rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                <div className="grid h-24 w-24 shrink-0 place-items-center overflow-hidden rounded-full bg-primary-100 text-3xl font-black text-primary-700 ring-4 ring-white">
+                  {avatarPreview ? (
+                    <img src={avatarPreview} alt="Avatar preview" className="h-full w-full object-cover" />
+                  ) : (
+                    values.fullName?.charAt(0)?.toUpperCase() || 'U'
+                  )}
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-bold text-neutral-900">Profile photo</p>
+                  <p className="mt-1 text-xs text-neutral-500">Upload your avatar now. It will appear in the navbar after login.</p>
+                  <label className="mt-3 inline-flex cursor-pointer rounded-md bg-primary-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-800">
+                    Upload Photo
+                    <input type="file" accept="image/*" onChange={onAvatarChange} className="hidden" />
+                  </label>
+                </div>
+              </div>
+            </div>
 
             <p className="mt-6 text-xs font-semibold uppercase tracking-wide text-neutral-500">I am a...</p>
             <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -178,10 +214,10 @@ const RegisterPage = () => {
       <Modal
         isOpen={isSuccessOpen}
         title="Account Created"
-        message="Your account was created successfully. Continue to login."
+        message="Your account was created successfully. You are now signed in."
         onClose={() => {
           setIsSuccessOpen(false)
-          navigate('/login')
+          navigate('/profile')
         }}
       />
     </div>

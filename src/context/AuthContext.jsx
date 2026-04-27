@@ -1,4 +1,5 @@
-import { createContext, useContext, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useMemo, useState } from 'react'
+import { updateStoredUser } from '../services/authService'
 
 const STORAGE_KEY = 'homezy_auth'
 
@@ -18,17 +19,25 @@ const AuthContext = createContext(null)
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(readInitialAuth)
 
-  const login = (payload) => {
+  const login = useCallback((payload) => {
     const nextAuth = { token: payload?.token || null, user: payload?.user || null }
     setAuth(nextAuth)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(nextAuth))
-  }
+  }, [])
 
-  const logout = () => {
+  const logout = useCallback(() => {
     const nextAuth = { token: null, user: null }
     setAuth(nextAuth)
     localStorage.removeItem(STORAGE_KEY)
-  }
+  }, [])
+
+  const updateUser = useCallback((updates) => {
+    const nextUser = updateStoredUser({ ...auth.user, ...updates })
+    const nextAuth = { token: auth.token, user: nextUser }
+    setAuth(nextAuth)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextAuth))
+    return nextUser
+  }, [auth.token, auth.user])
 
   const value = useMemo(
     () => ({
@@ -37,8 +46,9 @@ export const AuthProvider = ({ children }) => {
       isAuthenticated: Boolean(auth.token),
       login,
       logout,
+      updateUser,
     }),
-    [auth.token, auth.user],
+    [auth.token, auth.user, login, logout, updateUser],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

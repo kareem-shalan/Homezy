@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom'
 import { Badge, Button, Card, Container, Footer, Navbar } from '../components'
 import PageTransition from '../components/homezy/animations/PageTransition'
 import ScaleHover from '../components/homezy/animations/ScaleHover'
 import SlideUp from '../components/homezy/animations/SlideUp'
+import { useAuth } from '../context'
 
 const bookingHistory = [
   {
@@ -26,6 +28,13 @@ const savedUnits = [
 ]
 
 const StudentDashboardPage = () => {
+  const { user } = useAuth()
+  const displayName = user?.fullName || 'Kareem Shalan'
+  const university = user?.university || 'Tanta University'
+  const location = user?.location || 'Tanta, Egypt'
+  const avatar = user?.avatar || '/MyPhoto.jpg'
+  const cover = user?.cover || '/HomezyLogo.jpeg'
+
   return (
     <div className="min-h-screen bg-neutral-50">
       <Navbar />
@@ -36,7 +45,7 @@ const StudentDashboardPage = () => {
           <SlideUp>
             <Card className="relative overflow-hidden p-6 text-white">
               <img
-                src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1600&q=80"
+                src={cover}
                 alt="Profile cover"
                 className="absolute inset-0 h-full w-full object-cover"
               />
@@ -44,20 +53,22 @@ const StudentDashboardPage = () => {
               <div className="relative flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                 <div className="flex items-end gap-4">
                   <img
-                    src="/MyPhoto.jpg"
-                    alt="Kareem Shalan"
+                  src={avatar}
+                  alt={displayName}
                     className="h-20 w-20 rounded-xl border-2 border-white object-cover"
                   />
                   <div>
                     <Badge variant="success">Verified Student</Badge>
-                    <h1 className="mt-2 text-4xl font-bold">Kareem Shalan</h1>
-                    <p className="text-sm text-white/90">Tanta University in Tanta • Tanta, Egypt</p>
+                  <h1 className="mt-2 text-4xl font-bold">{displayName}</h1>
+                  <p className="text-sm text-white/90">{university} • {location}</p>
                   </div>
                 </div>
                 <ScaleHover glow>
+                <Link to="/profile">
                   <Button variant="outline" className="border-white bg-white text-primary-800 hover:bg-neutral-100">
                     Edit Profile
                   </Button>
+                </Link>
                 </ScaleHover>
               </div>
             </Card>
