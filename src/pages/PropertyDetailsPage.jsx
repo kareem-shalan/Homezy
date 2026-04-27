@@ -345,9 +345,15 @@ const PropertyDetailsPage = () => {
               </Card>
             </SlideUp>
 
-            <Link to="/properties" className="inline-block text-sm font-semibold text-primary-700 hover:text-primary-800">
-              Back to listings
-            </Link>
+            <ScaleHover>
+              <Link
+                to="/properties"
+                className="flex w-full items-center justify-center gap-2 rounded-2xl border border-primary-100 bg-white px-5 py-3 text-sm font-black text-primary-800 shadow-sm transition hover:border-primary-300 hover:bg-primary-50 hover:shadow-md"
+              >
+                <span aria-hidden="true">&larr;</span>
+                Back to listings
+              </Link>
+            </ScaleHover>
           </div>
         </Container>
         </main>
